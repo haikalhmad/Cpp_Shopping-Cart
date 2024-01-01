@@ -146,6 +146,9 @@ void editCart() {
 		break;
 	    case 4:
 		break;
+	    default:
+		std::cout << "Inavlid number! Please choose from the menu." << std::endl;
+		break;
 	}
     }while(modMenu != 4);
 }
@@ -278,6 +281,9 @@ void searchCart() {
 		}
 		if(!found)
 		    std::cout << "Your cart is empty! Please [Add to Cart] from the Main Menu." << std::endl;
+		break;
+	    default:
+		std::cout << "Invalid number! Please choose from the menu." << std::endl;
 		break;
 	}
     }while(searchMenu != 4);
