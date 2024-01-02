@@ -23,36 +23,36 @@ void addToCart() {
     std::string detail;
 
     //Input product number
-    std::cout << std::endl << "Enter the Product Number (1-20): ";
+    std::cout << std::endl << "Enter the [Product Number]: ";
     std::cin >> pNum;
     while(pNum < 1 || pNum > 20){
 	std::cout << "Invalid Product Number! Please refer to Catalog." << std::endl;
 	std::cin.clear();
-	std::cout << "Enter the Product Number (1-20): ";
+	std::cout << "Enter the [Product Number]: ";
 	std::cin >> pNum;
     } numCart[counterCart] = pNum;
     pNameCart[counterCart] = productName[pNum - 1]; //Find the name of product based on product number.
 
     //Input quantity number
-    std::cout << "Enter Quantity: ";
+    std::cout << "Enter [Quantity]: ";
     std::cin >> qNum;
     while(qNum < 1){
-	std::cout << "Invalid Quantity! Please enter at least 1." << std::endl;
+	std::cout << "Invalid [Quantity]! Please enter at least 1." << std::endl;
 	std::cin.clear();
-	std::cout << "Enter Quantity: ";
+	std::cout << "Enter [Quantity]: ";
 	std::cin >> qNum;
     } quantityCart[counterCart] = qNum;
     priceCart[counterCart] = productPrice[pNum - 1] * qNum; //Find the price of product and multiply with quantity.
 
     //Input additional details
-    std::cout << "Enter any additional details: ";
+    std::cout << "Enter [Additional Details]: ";
     std::cin.ignore(256, '\n');
     std::getline(std::cin, detail);
     detailCart[counterCart] = detail;
 
     counterCart++; //Add to cart array
 
-    std::cout << "Product added to cart successfully." << std::endl;
+    std::cout << "PRODUCT ADDED TO CART SUCCESSFULLY." << std::endl;
 }
 
 //View and modify cart function
@@ -62,9 +62,7 @@ void editCart() {
     std::string modDCart;
     
     do{
-	//bool varibale inside loop to reset to false
-	bool found = false;
-
+	bool found = false; //bool variable inside loop to reset to false
 	//Display cart
 	std::cout << std::endl << "\t\t\t" << "Your Cart Details" << std::endl;
 	std::cout << std::setw(4) << "Number" << std::setw(20) << "Product Name" << std::setw(16) << "Quantity" << std::setw(25) << "Additional Details" << std::setw(20) << "Product Price" << std::endl;
@@ -83,29 +81,30 @@ void editCart() {
 	std::cin >> modMenu;
 	switch(modMenu){
 	    case 1:
-		std::cout << "Which product do you wish to adjust the quantity from the cart: ";
+		std::cout << "Which [Product Number] to adjust [Quantity] from the cart: ";
 		std::cin >> modPNum;
 		for(int i = 0; i < counterCart; i++){
 		    if(modPNum == numCart[i]){
-			std::cout << "Enter a new quantity: ";
+			std::cout << "Enter a new [Quantity]: ";
 			std::cin >> modQCart;
 			while(modQCart < 1){
-			    std::cout << "Invalid Quantity! Please enter at least 1." << std::endl;
+			    std::cout << "Invalid [Quantity]! Please enter at least 1." << std::endl;
 			    std::cin.clear();
-			    std::cout << "Enter a new Quantity: ";
+			    std::cout << "Enter a new [Quantity]: ";
 			    std::cin >> modQCart;
 			}quantityCart[i] = modQCart; //Update quantity
 			priceCart[i] = productPrice[modPNum - 1] * modQCart; //Update Price
 
 			found = true; //set flag to true
+			std::cout << "QUANTITY HAS BEEN UPDATED." << std::endl;
 			break;
 		    }
 		}
 		if(!found)
-		    std::cout << "Product does not exist in cart!" << std::endl;
+		    std::cout << "[Product Number] does not exist in cart!" << std::endl;
 		break;
 	    case 2:
-		std::cout << "Which product do you wish to delete: ";
+		std::cout << "Which [Product Number] to Delete: ";
 		std::cin >> modPNum;
 		for(int i = 0; i < counterCart; i++){
 		    if(modPNum == numCart[i]) {
@@ -119,30 +118,30 @@ void editCart() {
 			}
 			counterCart--; //Reduce cart counter
 			found = true;
-			std::cout << "Product has been removed successfully." << std::endl;
+			std::cout << "PRODUCT HAS BEEN REMOVED." << std::endl;
 			break;
 		    }
 		}
 		if(!found)
-		    std::cout << "Product does not exist in cart!" << std::endl;
+		    std::cout << "[Product Number] does not exist in cart!" << std::endl;
 		break;
 	    case 3:
-		std::cout << "Which product do you wish to change the details: ";
+		std::cout << "Which [Product Number] to change [Additional Details]: ";
 		std::cin >> modPNum;
 		for(int i = 0; i < counterCart; i++){
 		    if(modPNum == numCart[i]){
-			std::cout << "Enter a new additional detail: ";
+			std::cout << "Enter new [Additional Detail]: ";
 			std::cin.ignore(256, '\n');
 			std::getline(std::cin, modDCart);
 			detailCart[i] = modDCart;
 
 			found = true;
-			std::cout << "The product details has been successfully updated." << std::endl;
+			std::cout << "ADDITIONAL DETAILS HAS BEEN UPDATED." << std::endl;
 			break;
 		    }
 		}
 		if(!found)
-		    std::cout << "Product does not exist in cart!" << std::endl;
+		    std::cout << "[Product Number] does not exist in cart!" << std::endl;
 		break;
 	    case 4:
 		break;
@@ -172,9 +171,9 @@ void totalCost(){
     //Calculate tiered discounts based on totalPrice
     if(totalPrice >= 10 && totalPrice <= 15)
 	tierDiscount = tierDiscountPrice[0] * totalPrice;
-    else if(totalPrice >= 16 && totalPrice <= 24)
+    else if(totalPrice > 15 && totalPrice <= 24)
 	tierDiscount = tierDiscountPrice[1] * totalPrice;
-    else if(totalPrice > 25)
+    else if(totalPrice > 24)
 	tierDiscount = tierDiscountPrice[2] * totalPrice;
     else
 	tierDiscount = 0;
@@ -202,10 +201,11 @@ void searchCart() {
 	std::cout << "3. Sort Cart in Ascending Order" << std::endl;
 	std::cout << "4. Exit" << std::endl;
 
+	std::cout << "Please choose a number from menu: ";
 	std::cin >> searchMenu;
 	switch(searchMenu){
 	    case 1:
-		std::cout << "Enter Product Number: ";
+		std::cout << "Enter [Product Number] to search in cart: ";
 		std::cin >> sPNum;
 		for(int i = 0; i < counterCart; i++){
 		    //if user input matches number in cart
@@ -221,10 +221,10 @@ void searchCart() {
 		    }
 		}
 		if(!found)
-		    std::cout << "Product does not exist in cart!" << std::endl;
+		    std::cout << "[Product Number] does not exist in cart!" << std::endl;
 		break;
 	    case 2:
-		std::cout << "Enter Product Name: ";
+		std::cout << "Enter [Product Name] to search in cart: ";
 		std::cin.ignore(256, '\n');
 		std::getline(std::cin, sPName);
 		//transform user input to lowercase
@@ -246,7 +246,7 @@ void searchCart() {
 		    }
 		}
 		if(!found)
-		    std::cout << "Product does not exist in cart!" << std::endl;
+		    std::cout << "[Product Name] does not exist in cart!" << std::endl;
 		break;
 	    case 3:
 		std::cout << "Sorting cart..." << std::endl;
@@ -281,6 +281,8 @@ void searchCart() {
 		}
 		if(!found)
 		    std::cout << "Your cart is empty! Please [Add to Cart] from the Main Menu." << std::endl;
+		break;
+	    case 4:
 		break;
 	    default:
 		std::cout << "Invalid number! Please choose from the menu." << std::endl;
